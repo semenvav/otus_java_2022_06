@@ -1,6 +1,7 @@
 
 public class Tester
 {
+
     private final ForTest forTest;
     Tester()
     {

@@ -8,10 +8,12 @@ public class ForTest {
     {
         stringIntegerMap.put(s, i);
     }
+
     public void increment(String s)
     {
         stringIntegerMap.put(s, stringIntegerMap.get(s) + 1);
     }
+
     public void clearMap()
     {
         stringIntegerMap.clear();

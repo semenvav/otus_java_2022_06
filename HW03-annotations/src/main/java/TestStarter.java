@@ -6,22 +6,29 @@ import java.util.List;
 
 public class TestStarter
 {
+
     private final List<Method> beforeMethods = new ArrayList<>();
     private final List<Method> testMethods = new ArrayList<>();
     private final List<Method> afterMethods = new ArrayList<>();
     private final Class<?> testClass;
-    TestStarter(String testClassName) throws ClassNotFoundException, NoSuchMethodException
-    {
+
+    TestStarter(String testClassName) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         testClass = Class.forName(testClassName);
         fillMethodLists();
+        startTesting();
+    }
+
+    private void startTesting() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         int testMethodsCount = testMethods.size(), failedTestMethodsCount = 0;
         Constructor<?> testClassConstructor  = testClass.getDeclaredConstructor();
         for(Method methodForTest : testMethods) {
+            Object testObject = testClassConstructor.newInstance();
             try {
-                Object testObject = testClassConstructor.newInstance();
                 testMethod(methodForTest, testObject);
-            }catch (Exception e){
+            } catch (Exception e) {
                 failedTestMethodsCount++;
+            } finally {
+                invokeAfterMethods(testObject);
             }
         }
         int passedTestMethodsCount = testMethodsCount - failedTestMethodsCount;
@@ -29,6 +36,7 @@ public class TestStarter
         System.out.println("Пройдено тестов: " + passedTestMethodsCount);
         System.out.println("Провалено тестов: " + failedTestMethodsCount);
     }
+
     private void fillMethodLists()
     {
         Method[] methods = testClass.getDeclaredMethods();
@@ -42,6 +50,7 @@ public class TestStarter
             }
         }
     }
+
     private void testMethod(Method methodForTest, Object testObject ) throws InvocationTargetException, IllegalAccessException
     {
         for (Method beforeMethod : beforeMethods)
@@ -49,9 +58,15 @@ public class TestStarter
             beforeMethod.invoke(testObject);
         }
         methodForTest.invoke(testObject);
+    }
+
+    private void invokeAfterMethods(Object testObject){
         for (Method afterMethod : afterMethods)
         {
-            afterMethod.invoke(testObject);
+            try{
+                afterMethod.invoke(testObject);
+            }catch (Exception ignored){
+            }
         }
     }
 }
