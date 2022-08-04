@@ -12,13 +12,15 @@ public class TestStarter
     private final List<Method> afterMethods = new ArrayList<>();
     private final Class<?> testClass;
 
-    TestStarter(String testClassName) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    TestStarter(String testClassName) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException
+    {
         testClass = Class.forName(testClassName);
         fillMethodLists();
         startTesting();
     }
 
-    private void startTesting() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    private void startTesting() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException
+    {
         int testMethodsCount = testMethods.size(), failedTestMethodsCount = 0;
         Constructor<?> testClassConstructor  = testClass.getDeclaredConstructor();
         for(Method methodForTest : testMethods) {
