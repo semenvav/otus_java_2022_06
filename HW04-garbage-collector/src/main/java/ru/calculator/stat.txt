@@ -1,0 +1,13 @@
+До оптимизации
+256mb- не хватает памяти
+512mb - spend msec:7717, sec:7
+1gb - spend msec:6696, sec:6
+1536mb - spend msec:6137, sec:6
+2gb - spend msec:6125, sec:6
+Увеличение хипа более 1.5 гб почти не влияет на скорость.
+После оптимизации
+256mb - spend msec:1737, sec:1
+512mb - spend msec:1092, sec:1
+1gb - spend msec:1125, sec:1
+1536mb - spend msec:1170, sec:1
+2gb - spend msec:1251, sec:1

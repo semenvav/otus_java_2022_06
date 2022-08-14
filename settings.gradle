@@ -2,3 +2,5 @@ rootProject.name = 'otusJava'
 include 'HW01-gradle'
 include 'HW02-collections'
 include 'HW03-annotations'
+include 'HW04-garbage-collector'
+
